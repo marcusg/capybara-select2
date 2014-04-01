@@ -12,7 +12,7 @@ module Capybara
       single.click if single
 
       if options.has_key? :search
-        find(:xpath, "//body").find("input.select2-input").set(value)
+        find(:xpath, "//body").find("input.select2-input", visible: true).set(value)
         page.execute_script(%|$("input.select2-input:visible").keyup();|)
         drop_container = ".select2-results"
       else
@@ -20,7 +20,7 @@ module Capybara
       end
 
       [value].flatten.each_with_index do |value, index|
-        multiple.click if multiple# unless index == 0
+        multiple.click if multiple
         find(:xpath, "//body").find("#{drop_container} li", text: value).click
       end
     end
